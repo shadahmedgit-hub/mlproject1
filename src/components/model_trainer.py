@@ -43,12 +43,39 @@ class ModelTrainer:
                       "AdaBoost":AdaBoostRegressor()
                       }
 
+            params = {
+
+                    "Linear Regression": {},
+
+                    "Decision Tree": {
+                        "criterion": ["squared_error", "friedman_mse"],
+                        "max_depth": [5, 10, 15, None]
+                    },
+
+                    "Random Forest": {
+                        "n_estimators": [50, 100, 200],
+                        "max_depth": [5, 10, None]
+                    },
+
+                    "Gradient Boosting": {
+                        "learning_rate": [0.01, 0.05, 0.1],
+                        "n_estimators": [50, 100, 200],
+                        "max_depth": [3, 5]
+                    },
+
+                    "AdaBoost": {
+                        "learning_rate": [0.01, 0.1, 1.0],
+                        "n_estimators": [50, 100, 200]
+                    }
+                }
+
             model_report:dict = evaluate_models(
                 X_train=X_train,
                 y_train=y_train,
                 X_test=X_test,
                 y_test=y_test,
-                models=models
+                models=models,
+                param = params
             )
 
             best_model_score = max(sorted(model_report.values()))
